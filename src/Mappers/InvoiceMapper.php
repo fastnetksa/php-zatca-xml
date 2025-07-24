@@ -357,7 +357,7 @@ class InvoiceMapper
 
         try {
             return new DateTime($dateTimeStr);
-        } catch (Exception) {
+        } catch (Exception $e) {
             return new DateTime;
         }
     }

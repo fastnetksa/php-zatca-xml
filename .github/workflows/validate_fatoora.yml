@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: [ '7.4', '8.1' ]
+        php-version: [7.4, 8.1]
 
     steps:
       - name: 🛠️ Checkout Repository
@@ -99,4 +99,5 @@ jobs:
           fatoora -validate -invoice ../../../examples/output/Standard_Invoice_Signed.xml
           fatoora -validate -invoice ../../../examples/output/Standard_Debit_Note_Signed.xml
           fatoora -validate -invoice ../../../examples/output/Standard_Credit_Note_Signed.xml
+
 
