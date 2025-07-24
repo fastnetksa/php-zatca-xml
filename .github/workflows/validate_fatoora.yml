@@ -100,4 +100,3 @@ jobs:
           fatoora -validate -invoice ../../../examples/output/Standard_Debit_Note_Signed.xml
           fatoora -validate -invoice ../../../examples/output/Standard_Credit_Note_Signed.xml
 
-
