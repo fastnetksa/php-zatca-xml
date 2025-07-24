@@ -5,6 +5,7 @@ namespace Saleh7\Zatca\Helpers;
 use DOMDocument;
 use DOMElement;
 use DOMException;
+use Saleh7\Zatca\Helpers\Compat;
 use DOMXPath;
 use InvalidArgumentException;
 use Saleh7\Zatca\Tags\CertificateSignature;
@@ -52,7 +53,7 @@ class InvoiceExtension
         $doc->formatOutput = true;
 
         // Ensure proper indentation if not already present.
-        if (! str_contains($xmlString, '    <cbc:ProfileID>')) {
+        if (! Compat::strContains($xmlString, '    <cbc:ProfileID>')) {
             $xmlString = preg_replace('/^[ ]+(?=<)/m', '$0$0', $xmlString);
         }
 
@@ -353,16 +354,21 @@ class InvoiceExtension
             $signatureValue = base64_encode($certificate->getPrivateKey()->sign(base64_decode($invoiceDigest)));
         }
 
-        $issueDate = $this->find('cbc:IssueDate')?->toText();
-        $issueTime = $this->find('cbc:IssueTime')?->toText();
-        $issueTime = stripos($issueTime, 'Z') === false ? $issueTime.'Z' : $issueTime;
+        $issueDateNode = $this->find('cbc:IssueDate');
+        $issueDate = $issueDateNode ? $issueDateNode->toText() : null;
+
+        $issueTimeNode = $this->find('cbc:IssueTime');
+        $issueTime = $issueTimeNode ? $issueTimeNode->toText() : null;
+        if ($issueTime !== null && stripos($issueTime, 'Z') === false) {
+            $issueTime .= 'Z';
+        }
 
         $qrTags = [
-            new Seller($this->find('cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cbc:RegistrationName')?->toText()),
-            new TaxNumber($this->find('cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cbc:CompanyID')?->toText()),
+            new Seller(($sellerNode = $this->find('cac:AccountingSupplierParty/cac:Party/cac:PartyLegalEntity/cbc:RegistrationName')) ? $sellerNode->toText() : null),
+            new TaxNumber(($taxNumberNode = $this->find('cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cbc:CompanyID')) ? $taxNumberNode->toText() : null),
             new InvoiceDate($issueDate.'T'.$issueTime),
-            new InvoiceTotalAmount($this->find('cac:LegalMonetaryTotal/cbc:TaxInclusiveAmount')?->toText()),
-            new InvoiceTaxAmount($this->find('cac:TaxTotal')?->toText()),
+            new InvoiceTotalAmount(($totalAmountNode = $this->find('cac:LegalMonetaryTotal/cbc:TaxInclusiveAmount')) ? $totalAmountNode->toText() : null),
+            new InvoiceTaxAmount(($taxTotalNode = $this->find('cac:TaxTotal')) ? $taxTotalNode->toText() : null),
             new InvoiceHash($invoiceDigest),
             new InvoiceDigitalSignature($signatureValue),
             new PublicKey(base64_decode($certificate->getRawPublicKey())),
@@ -370,7 +376,7 @@ class InvoiceExtension
 
         // For Simplified Tax Invoices, add the certificate signature.
         $invoiceTypeCodeNode = $this->find('cbc:InvoiceTypeCode');
-        $isSimplified = $invoiceTypeCodeNode && str_starts_with($invoiceTypeCodeNode->getElement()->getAttribute('name'), '02');
+        $isSimplified = $invoiceTypeCodeNode && Compat::strStartsWith($invoiceTypeCodeNode->getElement()->getAttribute('name'), '02');
 
         if ($isSimplified) {
             $qrTags[] = new CertificateSignature($certificate->getCertSignature());
