@@ -87,7 +87,7 @@ class InvoiceMapper
      *
      * @throws InvalidArgumentException If invalid JSON data is provided.
      */
-    public function mapToInvoice(array|string $data): Invoice
+    public function mapToInvoice($data): Invoice
     {
         // If data is a JSON string, convert it to an array.
         if (is_string($data)) {
