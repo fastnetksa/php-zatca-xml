@@ -11,7 +11,12 @@ use Saleh7\Zatca\Helpers\QRCodeGenerator;
 
 class InvoiceSigner
 {
-    private mixed $signedInvoice;  // Signed invoice XML string
+    /**
+     * Signed invoice XML string.
+     *
+     * @var string
+     */
+    private $signedInvoice;
 
     private string $hash;           // Invoice hash (base64 encoded)
 
@@ -19,7 +24,12 @@ class InvoiceSigner
 
     private Certificate $certificate;    // Certificate used for signing
 
-    private mixed $digitalSignature; // Digital signature (base64 encoded)
+    /**
+     * Digital signature (base64 encoded).
+     *
+     * @var string
+     */
+    private $digitalSignature;
 
     // Private constructor to force usage of signInvoice method
     private function __construct() {}
