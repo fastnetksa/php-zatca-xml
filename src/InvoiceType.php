@@ -140,27 +140,63 @@ class InvoiceType implements XmlSerializable
         }
 
         // Determine the base invoice type code based on invoiceType property.
-        $invoiceTypeCode = match ($this->invoiceType) {
-            'invoice' => InvoiceTypeCode::INVOICE,
-            'debit' => InvoiceTypeCode::DEBIT_NOTE,
-            'credit' => InvoiceTypeCode::CREDIT_NOTE,
-            'prepayment' => InvoiceTypeCode::PREPAYMENT,
-            default => throw new InvalidArgumentException('Invalid invoice type provided.'),
-        };
+        switch ($this->invoiceType) {
+            case 'invoice':
+                $invoiceTypeCode = InvoiceTypeCode::INVOICE;
+                break;
+
+            case 'debit':
+                $invoiceTypeCode = InvoiceTypeCode::DEBIT_NOTE;
+                break;
+
+            case 'credit':
+                $invoiceTypeCode = InvoiceTypeCode::CREDIT_NOTE;
+                break;
+
+            case 'prepayment':
+                $invoiceTypeCode = InvoiceTypeCode::PREPAYMENT;
+                break;
+
+            default:
+                throw new InvalidArgumentException('Invalid invoice type provided.');
+        }
 
         // Determine the complete invoice type value based on the invoice category.
-        $invoiceTypeValue = match ($this->invoice) {
-            'standard' => match ($this->invoiceType) {
-                'invoice', 'debit', 'credit', 'prepayment' => InvoiceTypeCode::STANDARD_INVOICE,
-                default => throw new InvalidArgumentException('Invalid invoice type provided.'),
-            },
-            'simplified' => match ($this->invoiceType) {
-                'invoice', 'debit', 'credit' => InvoiceTypeCode::SIMPLIFIED_INVOICE,
-                'prepayment' => InvoiceTypeCode::STANDARD_INVOICE,
-                default => throw new InvalidArgumentException('Invalid invoice type provided.'),
-            },
-            default => throw new InvalidArgumentException('Invalid invoice category provided.'),
-        };
+        switch ($this->invoice) {
+            case 'standard':
+                switch ($this->invoiceType) {
+                    case 'invoice':
+                    case 'debit':
+                    case 'credit':
+                    case 'prepayment':
+                        $invoiceTypeValue = InvoiceTypeCode::STANDARD_INVOICE;
+                        break;
+
+                    default:
+                        throw new InvalidArgumentException('Invalid invoice type provided.');
+                }
+                break;
+
+            case 'simplified':
+                switch ($this->invoiceType) {
+                    case 'invoice':
+                    case 'debit':
+                    case 'credit':
+                        $invoiceTypeValue = InvoiceTypeCode::SIMPLIFIED_INVOICE;
+                        break;
+
+                    case 'prepayment':
+                        $invoiceTypeValue = InvoiceTypeCode::STANDARD_INVOICE;
+                        break;
+
+                    default:
+                        throw new InvalidArgumentException('Invalid invoice type provided.');
+                }
+                break;
+
+            default:
+                throw new InvalidArgumentException('Invalid invoice category provided.');
+        }
 
         // Adjust type value based on additional flags.
         if (strlen($invoiceTypeValue) >= 7) {
