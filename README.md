@@ -29,8 +29,9 @@ The original namespace `Saleh7\Zatca` has not been changed to maintain compatibi
 If the original author returns and resumes activity, we are open to merging all changes and improvements back into the original repository.
 
 **API Integration:**  
-API-related functionality has been refactored and moved to a separate library for better modularity and maintainability:  
-🔗 [sevaske/zatca-api](https://github.com/sevaske/zatca-api)
+API-related functionality has been refactored and moved to a separate library for better modularity and maintainability.
+If you need API integration, you may install the optional package
+🔗 [sevaske/zatca-api](https://github.com/sevaske/zatca-api) (requires PHP 8.1+)
 
 Original project: [https://github.com/Saleh7/php-zatca-xml](https://github.com/Saleh7/php-zatca-xml)
 
