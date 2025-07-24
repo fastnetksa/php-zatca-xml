@@ -29,9 +29,10 @@ class Delivery implements XmlSerializable
      *
      * Accepts a DateTime instance or a date string (which will be converted to DateTime).
      *
+     * @param DateTime|string|null $actualDeliveryDate
      * @throws InvalidArgumentException if the date string is invalid.
      */
-    public function setActualDeliveryDate(DateTime|string|null $actualDeliveryDate): self
+    public function setActualDeliveryDate($actualDeliveryDate): self
     {
         if (is_string($actualDeliveryDate)) {
             try {
@@ -58,9 +59,10 @@ class Delivery implements XmlSerializable
      *
      * Accepts a DateTime instance or a date string (which will be converted to DateTime).
      *
+     * @param DateTime|string|null $latestDeliveryDate
      * @throws InvalidArgumentException if the date string is invalid.
      */
-    public function setLatestDeliveryDate(DateTime|string|null $latestDeliveryDate): self
+    public function setLatestDeliveryDate($latestDeliveryDate): self
     {
         if (is_string($latestDeliveryDate)) {
             try {

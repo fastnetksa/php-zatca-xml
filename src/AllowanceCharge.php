@@ -192,8 +192,10 @@ class AllowanceCharge implements XmlSerializable
 
     /**
      * Set the tax category.
+     *
+     * @param TaxCategory|array|null $taxCategory
      */
-    public function setTaxCategory(TaxCategory|array|null $taxCategory): self
+    public function setTaxCategory($taxCategory): self
     {
         if ($taxCategory instanceof TaxCategory) {
             $this->taxCategory = [$taxCategory];

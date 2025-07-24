@@ -145,8 +145,10 @@ class Item implements XmlSerializable
 
     /**
      * Set the classified tax category.
+     *
+     * @param ClassifiedTaxCategory|array|null $classifiedTaxCategory
      */
-    public function setClassifiedTaxCategory(ClassifiedTaxCategory|array|null $classifiedTaxCategory): self
+    public function setClassifiedTaxCategory($classifiedTaxCategory): self
     {
         if ($classifiedTaxCategory instanceof ClassifiedTaxCategory) {
             $this->classifiedTaxCategory = [$classifiedTaxCategory];
