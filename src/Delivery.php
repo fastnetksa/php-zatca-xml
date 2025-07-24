@@ -37,7 +37,7 @@ class Delivery implements XmlSerializable
         if (is_string($actualDeliveryDate)) {
             try {
                 $actualDeliveryDate = new DateTime($actualDeliveryDate);
-            } catch (Exception) {
+            } catch (Exception $e) {
                 throw new InvalidArgumentException('Invalid actual delivery date format.');
             }
         }
@@ -67,7 +67,7 @@ class Delivery implements XmlSerializable
         if (is_string($latestDeliveryDate)) {
             try {
                 $latestDeliveryDate = new DateTime($latestDeliveryDate);
-            } catch (Exception) {
+            } catch (Exception $e) {
                 throw new InvalidArgumentException('Invalid latest delivery date format.');
             }
         }
