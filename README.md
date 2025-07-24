@@ -53,8 +53,8 @@ This is an unofficial PHP library for generating ZATCA Fatoora e-invoices (simpl
 
 ## 📌 Requirements  
 
-### ✅ PHP Version  
-- **PHP 8.1 or higher**
+### ✅ PHP Version
+- **PHP 7.4 or higher**
 
 
 ## 🛠 Installation  
