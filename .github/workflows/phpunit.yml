@@ -3,20 +3,24 @@ name: CI
 on: [push, pull_request]
 
 jobs:
- build-test:
-   runs-on: ubuntu-latest
+  build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: [7.4, 8.2]
 
-   steps:
-     - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
 
-     - name: Set up PHP
-       uses: shivammathur/setup-php@v2
-       with:
-         php-version: '8.2'
-         extensions: mbstring, xml, ctype, json, curl, openssl
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, xml, ctype, json, curl, openssl
 
-     - name: Install Composer dependencies
-       run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
 
-     - name: Run PHPUnit tests
-       run: vendor/bin/phpunit tests
+      - name: Run PHPUnit tests
+        run: vendor/bin/phpunit tests
+
