@@ -41,7 +41,7 @@ class Attachment implements XmlDeserializable, XmlSerializable
         return $this->filePath;
     }
 
-    public function setFilePath(string $filePath): static
+    public function setFilePath(string $filePath): self
     {
         $this->filePath = $filePath;
 
@@ -53,7 +53,7 @@ class Attachment implements XmlDeserializable, XmlSerializable
         return $this->externalReference;
     }
 
-    public function setExternalReference(string $externalReference): static
+    public function setExternalReference(string $externalReference): self
     {
         $this->externalReference = $externalReference;
 
@@ -68,7 +68,7 @@ class Attachment implements XmlDeserializable, XmlSerializable
     /**
      * @param  string  $base64Content  Base64 encoded base64Content
      */
-    public function setBase64Content(string $base64Content, string $fileName, ?string $mimeType): static
+    public function setBase64Content(string $base64Content, string $fileName, ?string $mimeType): self
     {
         $this->base64Content = $base64Content;
         $this->fileName = $fileName;
@@ -82,7 +82,7 @@ class Attachment implements XmlDeserializable, XmlSerializable
         return $this->fileName;
     }
 
-    public function setFileName(string $fileName): static
+    public function setFileName(string $fileName): self
     {
         $this->fileName = $fileName;
 
@@ -94,7 +94,7 @@ class Attachment implements XmlDeserializable, XmlSerializable
         return $this->mimeType;
     }
 
-    public function setMimeType(?string $mimeType): static
+    public function setMimeType(?string $mimeType): self
     {
         $this->mimeType = $mimeType;
 
@@ -162,7 +162,7 @@ class Attachment implements XmlDeserializable, XmlSerializable
     /**
      * The xmlDeserialize method is called during xml reading.
      */
-    public static function xmlDeserialize(Reader $reader): static
+    public static function xmlDeserialize(Reader $reader): self
     {
         $mixedContent = mixedContent($reader);
         $embeddedDocumentBinaryObject = array_values(array_filter($mixedContent, fn ($element) => $element['name'] === Schema::CBC.'EmbeddedDocumentBinaryObject'))[0] ?? null;
