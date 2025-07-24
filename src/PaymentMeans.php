@@ -20,12 +20,14 @@ class PaymentMeans implements XmlSerializable
     private ?string $instructionNote = null;
 
     /**
-     * @var mixed|null Payee financial account.
+     * Payee financial account for XML serialization.
      *
-     * @note Consider replacing 'mixed' with a more specific type (e.g., FinancialAccount)
-     *       if available.
+     * Expected to be an object implementing \Sabre\Xml\XmlSerializable
+     * or an array structure compatible with the writer.
+     *
+     * @var object|array|null
      */
-    private mixed $payeeFinancialAccount = null;
+    private $payeeFinancialAccount = null;
 
     /** @var string|null Payment ID. */
     private ?string $paymentId = null;
