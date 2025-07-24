@@ -28,7 +28,7 @@ class AdditionalDocumentReference implements XmlDeserializable, XmlSerializable
         return $this->id;
     }
 
-    public function setId(?string $id): static
+    public function setId(?string $id): self
     {
         $this->id = $id;
 
@@ -40,7 +40,7 @@ class AdditionalDocumentReference implements XmlDeserializable, XmlSerializable
         return $this->UUID;
     }
 
-    public function setUUID(?string $UUID): static
+    public function setUUID(?string $UUID): self
     {
         $this->UUID = $UUID;
 
@@ -52,7 +52,7 @@ class AdditionalDocumentReference implements XmlDeserializable, XmlSerializable
         return $this->documentType;
     }
 
-    public function setDocumentType(?string $documentType): static
+    public function setDocumentType(?string $documentType): self
     {
         $this->documentType = $documentType;
 
@@ -64,7 +64,7 @@ class AdditionalDocumentReference implements XmlDeserializable, XmlSerializable
         return $this->documentTypeCode;
     }
 
-    public function setDocumentTypeCode(?int $documentTypeCode): static
+    public function setDocumentTypeCode(?int $documentTypeCode): self
     {
         $this->documentTypeCode = $documentTypeCode;
 
@@ -76,7 +76,7 @@ class AdditionalDocumentReference implements XmlDeserializable, XmlSerializable
         return $this->documentDescription;
     }
 
-    public function setDocumentDescription(?string $documentDescription): static
+    public function setDocumentDescription(?string $documentDescription): self
     {
         $this->documentDescription = $documentDescription;
 
@@ -88,7 +88,7 @@ class AdditionalDocumentReference implements XmlDeserializable, XmlSerializable
         return $this->attachment;
     }
 
-    public function setAttachment(?Attachment $attachment): static
+    public function setAttachment(?Attachment $attachment): self
     {
         $this->attachment = $attachment;
 
@@ -132,7 +132,7 @@ class AdditionalDocumentReference implements XmlDeserializable, XmlSerializable
     /**
      * The xmlDeserialize method is called during xml reading.
      */
-    public static function xmlDeserialize(Reader $reader): static
+    public static function xmlDeserialize(Reader $reader): self
     {
         $keyValues = keyValue($reader);
 
